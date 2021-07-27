@@ -1,9 +1,49 @@
 console.log("Let's play!");
+let computerScore = 0;
+let playerScore = 0;
+
+
+/*Scoring*/
+const computerScoreBoard = document.querySelector('#computerScoreBoard');
+const playerScoreBoard = document.querySelector('#playerScoreBoard');
+
+
+function updateScore () {
+    computerScoreBoard.textContent = computerScore;
+    playerScoreBoard.textContent = playerScore;
+}
+
+/*Assing event listeners to each button.*/
+const rock = document.querySelector('#rock');
+const paper = document.querySelector('#paper');
+const scissors = document.querySelector('#scissors');
+
+rock.addEventListener('click', function (e) {
+    playerSelection = "rock";
+    playRound(playerSelection, computerPlay());
+    updateScore();
+    checkWinner();
+});
+
+paper.addEventListener('click', function (e) {
+    playerSelection = "paper";
+    playRound(playerSelection, computerPlay());
+    updateScore();
+    checkWinner();
+});
+
+scissors.addEventListener('click', function (e) {
+    playerSelection = "scissors";
+    console.log(playRound(playerSelection, computerPlay()));
+    updateScore();
+    checkWinner();
+});
+
+
 
 /*Create array of possible options */
 const options = ['rock', 'paper', 'scissors']
-let computerScore = 0;
-let playerScore = 0;
+
 
 /*Make computer pick rock, paper or scissors */
 function computerPlay() {
@@ -52,23 +92,6 @@ function playRound(playerSelection, computerSelection) {
 
 function game() {
 
-    /*Loop 5 times */    
-    let rounds = 0;
-    while (rounds < 5) {
-
-        /*Player input for their guess */
-        playerSelection = prompt("Choose either rock, paper or scissors: ");
-
-        /*Play a round of rock paper scissors */
-        console.log(playRound(playerSelection, computerPlay()));
-
-        /*Display score */
-        console.log("Computer score: " + computerScore);
-        console.log("Your score: " + playerScore);
-
-        rounds++;
-    }
-
     /*Display final score */
     console.log("Final score: Computer[" + computerScore + "], Player[" + playerScore + "].");
 
@@ -77,7 +100,15 @@ function game() {
     : computerScore > playerScore ? console.log("Unlucky... You were bested.")
     : console.log("It's a draw!");
 
-
 }
 
-game();
+function checkWinner() {
+    if (computerScore >= 5 || playerScore >= 5) {
+        console.log("Winner, resesting...")
+        alert("Final score: Computer[" + computerScore + "], Player[" + playerScore + "].");
+        computerScore = 0;
+        playerScore = 0;
+    } else return;
+}
+
+
