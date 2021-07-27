@@ -50,25 +50,34 @@ function playRound(playerSelection, computerSelection) {
 }
 
 
-
-
-
 function game() {
-    /*Player input for their guess */
-    playerSelection = prompt("Choose either rock, paper or scissors: ");
 
-    /*Play a round of rock paper scissors */
-    console.log(playRound(playerSelection, computerPlay()));
-    
-    /*Track score and display results*/
-    console.log("Computer score: " + computerScore);
-    console.log("Your score: " + playerScore);
+    /*Loop 5 times */    
+    let rounds = 0;
+    while (rounds < 5) {
 
-    /*Loop 5 times */
+        /*Player input for their guess */
+        playerSelection = prompt("Choose either rock, paper or scissors: ");
+
+        /*Play a round of rock paper scissors */
+        console.log(playRound(playerSelection, computerPlay()));
+
+        /*Display score */
+        console.log("Computer score: " + computerScore);
+        console.log("Your score: " + playerScore);
+
+        rounds++;
+    }
+
+    /*Display final score */
+    console.log("Final score: Computer[" + computerScore + "], Player[" + playerScore + "].");
+
+    /*Determine the winner. */
+    playerScore > computerScore ? console.log("Congratulations! You win!")
+    : computerScore > playerScore ? console.log("Unlucky... You were bested.")
+    : console.log("It's a draw!");
+
+
 }
 
-game();
-game();
-game();
-game();
 game();
