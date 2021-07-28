@@ -1,9 +1,24 @@
-console.log("Let's play!");
-let computerScore = 0;
-let playerScore = 0;
+/*Commentry */ 
+const comments = document.querySelector("#comments");
+
+function createComment (string) {
+    const content = document.createElement('p');
+    content.textContent = string;
+    comments.appendChild(content);
+}
+
+createComment("Let's play!");
+
+function removeAllChildComments(parent) {
+    while (parent.firstChild) {
+        parent.removeChild(parent.firstChild);
+    }
+}
 
 
 /*Scoring*/
+let computerScore = 0;
+let playerScore = 0;
 const computerScoreBoard = document.querySelector('#computerScoreBoard');
 const playerScoreBoard = document.querySelector('#playerScoreBoard');
 
@@ -19,22 +34,22 @@ const paper = document.querySelector('#paper');
 const scissors = document.querySelector('#scissors');
 
 rock.addEventListener('click', function (e) {
-    playerSelection = "rock";
-    playRound(playerSelection, computerPlay());
+    playerButton = "rock";
+    playRound(playerButton, computerPlay());
     updateScore();
     checkWinner();
 });
 
 paper.addEventListener('click', function (e) {
-    playerSelection = "paper";
-    playRound(playerSelection, computerPlay());
+    playerButton = "paper";
+    playRound(playerButton, computerPlay());
     updateScore();
     checkWinner();
 });
 
 scissors.addEventListener('click', function (e) {
-    playerSelection = "scissors";
-    console.log(playRound(playerSelection, computerPlay()));
+    playerButton = "scissors";
+    playRound(playerButton, computerPlay());
     updateScore();
     checkWinner();
 });
@@ -56,58 +71,57 @@ function playRound(playerSelection, computerSelection) {
     console.log("Computer selected: " + computerSelection);
     console.log("You selected: " + playerSelection);
 
+    let message = "blank"
+
     switch (playerSelection.toLowerCase()) {
         case 'rock':
-            if(computerSelection === 'paper') {
+            if(computerSelection == 'paper') {
                 computerScore++;
-                return "You lose! Paper beats rock.";
-            } else if(computerSelection === 'scissors') {
+                message = "You lose! Paper beats rock.";
+            } else if(computerSelection == 'scissors') {
                 playerScore++;
-                return "You win! Rock beats scissors.";
+                message = "You win! Rock beats scissors.";
             } else 
-                return  "It's a draw! You both selected rock.";
+                message = "It's a draw! You both selected rock.";
+                break;
         
         case 'paper':
-            if(computerSelection === 'rock') {
+            if(computerSelection == 'rock') {
                 playerScore++;
-                return "You win! Paper beats rock.";
-            } else if(computerSelection === 'scissors') {
+                message = "You win! Paper beats rock.";
+            } else if(computerSelection == 'scissors') {
                 computerScore++;
-                return "You Lose! Scissors beats paper.";
+                message = "You Lose! Scissors beats paper.";
             } else 
-                return  "It's a draw! You both selected paper.";
+                message = "It's a draw! You both selected paper.";
+                break;
 
         case 'scissors':
-            if(computerSelection === 'paper') {
+            if(computerSelection == 'paper') {
                 playerScore++;
-                return "You win! Scissors beats paper.";
-            } else if(computerSelection === 'rock') {
+                message = "You win! Scissors beats paper.";
+            } else if(computerSelection == 'rock') {
                 computerScore++;
-                return "You Lose! Rock beats scissors.";
+                message = "You Lose! Rock beats scissors.";
             } else 
-                return  "It's a draw! You both selected scissors.";
+                message = "It's a draw! You both selected scissors.";
+                break;
     }
+
+    return createComment(message);
 }
 
-
-function game() {
-
-    /*Display final score */
-    console.log("Final score: Computer[" + computerScore + "], Player[" + playerScore + "].");
-
-    /*Determine the winner. */
-    playerScore > computerScore ? console.log("Congratulations! You win!")
-    : computerScore > playerScore ? console.log("Unlucky... You were bested.")
-    : console.log("It's a draw!");
-
-}
 
 function checkWinner() {
     if (computerScore >= 5 || playerScore >= 5) {
-        console.log("Winner, resesting...")
-        alert("Final score: Computer[" + computerScore + "], Player[" + playerScore + "].");
+        removeAllChildComments(comments);
+        createComment(playerScore > computerScore ? "Congratulations! You win!"
+        : computerScore > playerScore ? "Unlucky... You were bested."
+        : "It's a draw!");
         computerScore = 0;
         playerScore = 0;
+        
+        createComment("Play again?")
     } else return;
 }
 
